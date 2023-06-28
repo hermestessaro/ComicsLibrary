@@ -30,3 +30,5 @@ fun CharacterImage(
 ) {
     AsyncImage(model = url, contentDescription = null, modifier = modifier, contentScale = contentScale)
 }
+
+fun List<String>.comicsToString() = this.joinToString(separator = ", ")
