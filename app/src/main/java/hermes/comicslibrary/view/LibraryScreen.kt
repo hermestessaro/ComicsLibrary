@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -112,7 +113,7 @@ fun ShowCharactersList(
                 Column(modifier = Modifier
                     .padding(4.dp)
                     .clip(RoundedCornerShape(5.dp))
-                    .background(Color.White)
+                    .background(MaterialTheme.colors.background)
                     .padding(4.dp)
                     .fillMaxWidth()
                     .wrapContentHeight()
