@@ -40,7 +40,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import hermes.comicslibrary.model.Note
 import hermes.comicslibrary.model.db.DbNote
 import hermes.comicslibrary.ui.theme.GrayBackground
@@ -49,7 +48,7 @@ import hermes.comicslibrary.utils.CharacterImage
 import hermes.comicslibrary.viewmodel.CollectionDbViewModel
 
 @Composable
-fun CollectionScreen(collectionViewModel: CollectionDbViewModel, navController: NavHostController) {
+fun CollectionScreen(collectionViewModel: CollectionDbViewModel) {
 
     val charactersInCollection = collectionViewModel.collection.collectAsState()
     val expandedElement = remember { mutableStateOf(-1) }
