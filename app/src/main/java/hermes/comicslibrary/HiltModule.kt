@@ -9,6 +9,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import hermes.comicslibrary.api.ApiService
 import hermes.comicslibrary.api.MarvelApiRepo
+import hermes.comicslibrary.model.connectivity.ConnectivityMonitor
 import hermes.comicslibrary.model.db.CharacterDao
 import hermes.comicslibrary.model.db.CollectionDb
 import hermes.comicslibrary.model.db.CollectionDbRepo
@@ -35,5 +36,9 @@ class HiltModule {
     @Provides
     fun provideDbRepoImpl(characterDao: CharacterDao, noteDao: NoteDao): CollectionDbRepo =
         CollectionDbRepoImpl(characterDao, noteDao)
+
+    @Provides
+    fun provideConnectivityManager(@ApplicationContext context: Context) =
+        ConnectivityMonitor.getInstance(context)
 
 }

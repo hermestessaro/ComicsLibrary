@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import hermes.comicslibrary.api.NetworkResult
 import hermes.comicslibrary.model.CharactersApiResponse
+import hermes.comicslibrary.model.connectivity.ConnectivityObservable
 import hermes.comicslibrary.utils.AttributionText
 import hermes.comicslibrary.utils.CharacterImage
 import hermes.comicslibrary.utils.Destination
@@ -48,6 +49,8 @@ fun LibraryScreen(
 ) {
     val result by viewModel.result.collectAsState()
     val text = viewModel.queryText.collectAsState()
+    val networkAvailable =
+        viewModel.networkAvailable.observe().collectAsState(ConnectivityObservable.Status.Available)
 
     Column(
         modifier = Modifier
@@ -55,6 +58,23 @@ fun LibraryScreen(
             .padding(bottom = paddingValues.calculateBottomPadding()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        if (networkAvailable.value == ConnectivityObservable.Status.Unavailable) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Red),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Network unavailable",
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
+
         OutlinedTextField(
             value = text.value,
             onValueChange = viewModel::onQueryUpdate,
@@ -72,12 +92,15 @@ fun LibraryScreen(
                 is NetworkResult.Initial -> {
                     Text(text = "Search for a character")
                 }
+
                 is NetworkResult.Success -> {
                     ShowCharactersList(result, navHostController)
                 }
+
                 is NetworkResult.Loading -> {
                     CircularProgressIndicator()
                 }
+
                 is NetworkResult.Error -> {
                     Text(text = "Error: ${result.message}")
                 }
